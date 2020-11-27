@@ -1,0 +1,102 @@
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at:
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, SOFTWARE
+ * DISTRIBUTED UNDER THE LICENSE IS DISTRIBUTED ON AN "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+ * SEE THE LICENSE FOR THE SPECIFIC LANGUAGE GOVERNING PERMISSIONS AND
+ * LIMITATIONS UNDER THE LICENSE.
+ */
+
+/* ----------------------------------------------------------------------------
+ * Overrides
+ * ------------------------------------------------------------------------- */
+
+/* Induce a new stacking context, so we can use absolute positioning which
+   appears to be the only consistent way of moving the permalink to the
+   beginning of the headline without tampering with the HTML */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+/* Remove the anchor offset hack in favor of scroll margin */
+.md-typeset h1[id]::before,
+.md-typeset h2[id]::before,
+.md-typeset h3[id]::before,
+.md-typeset h4[id]::before,
+.md-typeset h5[id]::before,
+.md-typeset h6[id]::before {
+  display: none;
+}
+
+/* Add default scroll margins */
+.md-typeset [id]:target {
+  scroll-margin-top: 3.6rem;
+}
+
+/* Adjust scroll margins for some headlines */
+.md-typeset h1[id]:target,
+.md-typeset h2[id]:target,
+.md-typeset h3[id]:target,
+.md-typeset h4[id]:target {
+  scroll-margin-top: 3.4rem;
+}
+
+/* Move headerlink to the beginning */
+.md-typeset .headerlink {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: 0;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-0.1rem)
+}
+
+/* Fix layer position of buttons */
+.md-content__button {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure alignment when title has line break */
+.md-nav--primary .md-nav__link {
+  display: flex;
+}
+
+/* Define section counter */
+.md-nav--primary .md-nav__list {
+  counter-reset: section;
+}
+
+/* Increment counter for each section */
+.md-nav--primary .md-nav__link::before {
+  margin-right: .2rem;
+  counter-increment: section;
+  content: counter(section) ".";
+}
+
+/* Adjust print styles */
+@media print {
+
+  /* Remove padding */
+  .md-typeset h1,
+  .md-typeset h2,
+  .md-typeset h3,
+  .md-typeset h4,
+  .md-typeset h5,
+  .md-typeset h6 {
+    position: initial;
+    padding-left: initial;
+  }
+}
